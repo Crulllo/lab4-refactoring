@@ -1,3 +1,7 @@
+import java.util.Arrays;
+import java.util.List;
+import java.util.*;
+
 public class OrdersWriter {
     private Orders orders;
 
@@ -9,7 +13,8 @@ public class OrdersWriter {
         StringBuffer sb = new StringBuffer("{\"orders\": [");
         writeOrderTo(sb);
 
-        if (orders.getOrdersCount() > 0) {
+        if (orders.getOrdersCount() > 0)
+        {
             sb.delete(sb.length() - 2, sb.length());
         }
 
@@ -19,7 +24,7 @@ public class OrdersWriter {
     private void writeOrderTo(StringBuffer sb)
     {
         final int nbOrders = orders.getOrdersCount();
-        
+
         for (int i = 0; i < nbOrders; i++)
         {
             Order order = orders.getOrder(i);
@@ -83,22 +88,17 @@ public class OrdersWriter {
     }
 
     private String getSizeFor(Product product) {
-        switch (product.getSize()) {
-            case 1:
-                return "XS";
-            case 2:
-                return "S";
-            case 3:
-                return "M";
-            case 4:
-                return "L";
-            case 5:
-                return "XL";
-            case 6:
-                return "XXL";
-            default:
-                return "Invalid Size";
-        }
+        final int sizeNb = product.getSize();
+        Map<Integer, String> sizes = new HashMap<Integer, String>();
+        sizes.put(1, "XS");
+        sizes.put(2, "S");
+        sizes.put(3, "M");
+        sizes.put(4, "L");
+        sizes.put(5, "XL");
+        sizes.put(6, "XXL");
+        sizes.put(7, "Invalid Size");
+
+        return (String)sizes.get(sizeNb);
     }
 
     private String getColorFor(Product product) {
