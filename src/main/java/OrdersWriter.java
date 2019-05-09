@@ -39,13 +39,7 @@ public class OrdersWriter {
         {
             Product product = order.getProduct(j);
 
-            sb.append("{");
-            sb.append("\"code\": \"");
-            sb.append(product.getCode());
-            sb.append("\", ");
-            sb.append("\"color\": \"");
-            sb.append(getColorFor(product));
-            sb.append("\", ");
+            sb.append("{\"code\": \"" + product.getCode() + "\", \"color\": \"" + getColorFor(product) + "\", ");
 
             if (product.getSize() != Product.SIZE_NOT_APPLICABLE) {
                 sb.append("\"size\": \"");
