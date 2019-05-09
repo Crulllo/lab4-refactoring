@@ -1,3 +1,7 @@
+import java.util.Arrays;
+import java.util.List;
+import java.util.*;
+
 public class OrdersWriter {
     private Orders orders;
 
@@ -9,7 +13,8 @@ public class OrdersWriter {
         StringBuffer sb = new StringBuffer("{\"orders\": [");
         writeOrderTo(sb);
 
-        if (orders.getOrdersCount() > 0) {
+        if (orders.getOrdersCount() > 0)
+        {
             sb.delete(sb.length() - 2, sb.length());
         }
 
@@ -19,7 +24,7 @@ public class OrdersWriter {
     private void writeOrderTo(StringBuffer sb)
     {
         final int nbOrders = orders.getOrdersCount();
-        
+
         for (int i = 0; i < nbOrders; i++)
         {
             Order order = orders.getOrder(i);
@@ -83,34 +88,32 @@ public class OrdersWriter {
     }
 
     private String getSizeFor(Product product) {
-        switch (product.getSize()) {
-            case 1:
-                return "XS";
-            case 2:
-                return "S";
-            case 3:
-                return "M";
-            case 4:
-                return "L";
-            case 5:
-                return "XL";
-            case 6:
-                return "XXL";
-            default:
-                return "Invalid Size";
-        }
+        final int sizeNb = product.getSize();
+        String[] sizesTab = {"XS", "S", "M", "L", "XL", "XXL", "Invalid Size"};
+
+        return getLinked(sizesTab, product.getSize());
     }
 
     private String getColorFor(Product product) {
-        switch (product.getColor()) {
-            case 1:
-                return "blue";
-            case 2:
-                return "red";
-            case 3:
-                return "yellow";
-            default:
-                return "no color";
+        String[] valueTab = {"blue", "red", "yellow", "no color"};
+        return getLinked(valueTab, product.getColor());
+    }
+
+    private String getLinked(String[] valueTab, int productSize)
+    {
+        final int tabSize = valueTab.length;
+
+        if(productSize > tabSize)
+        {
+            return valueTab[tabSize];
         }
+
+        Map<Integer, String> map = new HashMap<Integer, String>();
+        for(int i = 1; i <= tabSize; ++i)
+        {
+            map.put(i, valueTab[i-1]);
+        }
+
+        return map.get(productSize);
     }
 }
