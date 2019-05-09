@@ -89,16 +89,21 @@ public class OrdersWriter {
 
     private String getSizeFor(Product product) {
         final int sizeNb = product.getSize();
-        Map<Integer, String> sizes = new HashMap<Integer, String>();
-        sizes.put(1, "XS");
-        sizes.put(2, "S");
-        sizes.put(3, "M");
-        sizes.put(4, "L");
-        sizes.put(5, "XL");
-        sizes.put(6, "XXL");
-        sizes.put(7, "Invalid Size");
+        String[] sizesTab = {"XS", "S", "M", "L", "XL", "XXL", "Invalid Size"};
 
-        return (String)sizes.get(sizeNb);
+        return getLinked(sizesTab, product.getSize());
+    }
+
+    private String getLinked(String[] valueTab, int productSize)
+    {
+        final int tabSize = valueTab.length;
+        Map<Integer, String> map = new HashMap<Integer, String>();
+        for(int i = 1; i <= tabSize; ++i)
+        {
+            map.put(i, valueTab[i-1]);
+        }
+
+        return map.get(productSize);
     }
 
     private String getColorFor(Product product) {
