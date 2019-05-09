@@ -21,7 +21,9 @@ public class OrdersWriter {
         for (int i = 0; i < orders.getOrdersCount(); i++)
         {
             Order order = orders.getOrder(i);
-            sb.append("{\"id\": " + order.getOrderId() + ", \"products\": [");
+            sb.append("{\"id\": "
+                    + order.getOrderId()
+                    + ", \"products\": [");
 
             writeProductsTo(sb, order);
 
@@ -39,12 +41,16 @@ public class OrdersWriter {
         {
             Product product = order.getProduct(j);
 
-            sb.append("{\"code\": \"" + product.getCode() + "\", \"color\": \"" + getColorFor(product) + "\", ");
+            sb.append("{\"code\": \""
+                    + product.getCode()
+                    + "\", \"color\": \""
+                    + getColorFor(product)
+                    + "\", ");
 
             if (product.getSize() != Product.SIZE_NOT_APPLICABLE) {
-                sb.append("\"size\": \"");
-                sb.append(getSizeFor(product));
-                sb.append("\", ");
+                sb.append("\"size\": \""
+                        + getSizeFor(product)
+                        + "\", ");
             }
 
             writePriceTo(sb, product);
@@ -53,12 +59,11 @@ public class OrdersWriter {
 
     private void writePriceTo(StringBuffer sb, Product product)
     {
-        sb.append("\"price\": ");
-        sb.append(product.getPrice());
-        sb.append(", ");
-        sb.append("\"currency\": \"");
-        sb.append(product.getCurrency());
-        sb.append("\"}, ");
+        sb.append("\"price\": "
+                + product.getPrice()
+                + ", \"currency\": \""
+                + product.getCurrency()
+                + "\"}, ");
     }
 
     private String getSizeFor(Product product) {
