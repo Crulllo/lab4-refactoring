@@ -94,9 +94,20 @@ public class OrdersWriter {
         return getLinked(sizesTab, product.getSize());
     }
 
+    private String getColorFor(Product product) {
+        String[] valueTab = {"blue", "red", "yellow", "no color"};
+        return getLinked(valueTab, product.getColor());
+    }
+
     private String getLinked(String[] valueTab, int productSize)
     {
         final int tabSize = valueTab.length;
+
+        if(productSize > tabSize)
+        {
+            return valueTab[tabSize];
+        }
+
         Map<Integer, String> map = new HashMap<Integer, String>();
         for(int i = 1; i <= tabSize; ++i)
         {
@@ -104,18 +115,5 @@ public class OrdersWriter {
         }
 
         return map.get(productSize);
-    }
-
-    private String getColorFor(Product product) {
-        switch (product.getColor()) {
-            case 1:
-                return "blue";
-            case 2:
-                return "red";
-            case 3:
-                return "yellow";
-            default:
-                return "no color";
-        }
     }
 }
