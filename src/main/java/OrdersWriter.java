@@ -21,10 +21,8 @@ public class OrdersWriter {
         for (int i = 0; i < orders.getOrdersCount(); i++)
         {
             Order order = orders.getOrder(i);
-            sb.append("{\"id\": "
-                    + order.getOrderId()
-                    + ", \"products\": [");
-
+            
+            writeOrderIdTo(sb, order.getOrderId());
             writeProductsTo(sb, order);
 
             if (order.getProductsCount() > 0) {
@@ -35,8 +33,15 @@ public class OrdersWriter {
         }
     }
 
+    private void writeOrderIdTo(StringBuffer sb, int orderId)
+    {
+        sb.append("{\"id\": " + orderId);
+    }
+
     private void writeProductsTo(StringBuffer sb, Order order)
     {
+        sb.append(", \"products\": [");
+
         for (int j = 0; j < order.getProductsCount(); j++)
         {
             Product product = order.getProduct(j);
