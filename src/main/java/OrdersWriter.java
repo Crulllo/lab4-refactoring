@@ -21,7 +21,7 @@ public class OrdersWriter {
         for (int i = 0; i < orders.getOrdersCount(); i++)
         {
             Order order = orders.getOrder(i);
-            
+
             writeOrderIdTo(sb, order.getOrderId());
             writeProductsTo(sb, order);
 
@@ -45,12 +45,7 @@ public class OrdersWriter {
         for (int j = 0; j < order.getProductsCount(); j++)
         {
             Product product = order.getProduct(j);
-
-            sb.append("{\"code\": \""
-                    + product.getCode()
-                    + "\", \"color\": \""
-                    + getColorFor(product)
-                    + "\", ");
+            writeProductCodeAndColor(sb, product.getCode(), getColorFor(product));
 
             if (product.getSize() != Product.SIZE_NOT_APPLICABLE) {
                 sb.append("\"size\": \""
@@ -60,6 +55,15 @@ public class OrdersWriter {
 
             writePriceTo(sb, product);
         }
+    }
+
+    private void writeProductCodeAndColor(StringBuffer sb, String codeProduct, String colorProduct)
+    {
+        sb.append("{\"code\": \""
+                + codeProduct
+                + "\", \"color\": \""
+                + colorProduct
+                + "\", ");
     }
 
     private void writePriceTo(StringBuffer sb, Product product)
