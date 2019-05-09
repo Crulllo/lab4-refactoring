@@ -48,13 +48,18 @@ public class OrdersWriter {
             writeProductCodeAndColor(sb, product.getCode(), getColorFor(product));
 
             if (product.getSize() != Product.SIZE_NOT_APPLICABLE) {
-                sb.append("\"size\": \""
-                        + getSizeFor(product)
-                        + "\", ");
+                writeSizeProduct(sb, getSizeFor(product));
             }
 
             writePriceTo(sb, product);
         }
+    }
+
+    private void writeSizeProduct(StringBuffer sb, String size)
+    {
+        sb.append("\"size\": \""
+                + size
+                + "\", ");
     }
 
     private void writeProductCodeAndColor(StringBuffer sb, String codeProduct, String colorProduct)
