@@ -18,7 +18,9 @@ public class OrdersWriter {
 
     private void writeOrderTo(StringBuffer sb)
     {
-        for (int i = 0; i < orders.getOrdersCount(); i++)
+        final int nbOrders = orders.getOrdersCount();
+        
+        for (int i = 0; i < nbOrders; i++)
         {
             Order order = orders.getOrder(i);
 
