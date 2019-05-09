@@ -21,10 +21,8 @@ public class OrdersWriter {
         for (int i = 0; i < orders.getOrdersCount(); i++)
         {
             Order order = orders.getOrder(i);
-            sb.append("{\"id\": "
-                    + order.getOrderId()
-                    + ", \"products\": [");
 
+            writeOrderIdTo(sb, order.getOrderId());
             writeProductsTo(sb, order);
 
             if (order.getProductsCount() > 0) {
@@ -35,26 +33,42 @@ public class OrdersWriter {
         }
     }
 
+    private void writeOrderIdTo(StringBuffer sb, int orderId)
+    {
+        sb.append("{\"id\": " + orderId);
+    }
+
     private void writeProductsTo(StringBuffer sb, Order order)
     {
+        sb.append(", \"products\": [");
+
         for (int j = 0; j < order.getProductsCount(); j++)
         {
             Product product = order.getProduct(j);
-
-            sb.append("{\"code\": \""
-                    + product.getCode()
-                    + "\", \"color\": \""
-                    + getColorFor(product)
-                    + "\", ");
+            writeProductCodeAndColor(sb, product.getCode(), getColorFor(product));
 
             if (product.getSize() != Product.SIZE_NOT_APPLICABLE) {
-                sb.append("\"size\": \""
-                        + getSizeFor(product)
-                        + "\", ");
+                writeSizeProduct(sb, getSizeFor(product));
             }
 
             writePriceTo(sb, product);
         }
+    }
+
+    private void writeSizeProduct(StringBuffer sb, String size)
+    {
+        sb.append("\"size\": \""
+                + size
+                + "\", ");
+    }
+
+    private void writeProductCodeAndColor(StringBuffer sb, String codeProduct, String colorProduct)
+    {
+        sb.append("{\"code\": \""
+                + codeProduct
+                + "\", \"color\": \""
+                + colorProduct
+                + "\", ");
     }
 
     private void writePriceTo(StringBuffer sb, Product product)
