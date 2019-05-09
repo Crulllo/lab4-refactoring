@@ -8,6 +8,17 @@ public class OrdersWriter {
     public String getContents() {
         StringBuffer sb = new StringBuffer("{\"orders\": [");
 
+        writeOrderTo(sb);
+
+        if (orders.getOrdersCount() > 0) {
+            sb.delete(sb.length() - 2, sb.length());
+        }
+
+        return sb.append("]}").toString();
+    }
+
+    private void writeOrderTo(StringBuffer sb)
+    {
         for (int i = 0; i < orders.getOrdersCount(); i++)
         {
             Order order = orders.getOrder(i);
@@ -26,12 +37,6 @@ public class OrdersWriter {
             sb.append("]");
             sb.append("}, ");
         }
-
-        if (orders.getOrdersCount() > 0) {
-            sb.delete(sb.length() - 2, sb.length());
-        }
-
-        return sb.append("]}").toString();
     }
 
     private void writeProductsTo(StringBuffer sb, Order order)
@@ -54,13 +59,18 @@ public class OrdersWriter {
                 sb.append("\", ");
             }
 
-            sb.append("\"price\": ");
-            sb.append(product.getPrice());
-            sb.append(", ");
-            sb.append("\"currency\": \"");
-            sb.append(product.getCurrency());
-            sb.append("\"}, ");
+            writePriceTo(sb, product);
         }
+    }
+
+    private void writePriceTo(StringBuffer sb, Product product)
+    {
+        sb.append("\"price\": ");
+        sb.append(product.getPrice());
+        sb.append(", ");
+        sb.append("\"currency\": \"");
+        sb.append(product.getCurrency());
+        sb.append("\"}, ");
     }
 
     private String getSizeFor(Product product) {
