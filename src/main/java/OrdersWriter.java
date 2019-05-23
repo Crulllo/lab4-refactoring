@@ -1,5 +1,6 @@
-import java.util.Arrays;
-import java.util.List;
+import Colors.Color;
+import Sizes.Size;
+
 import java.util.*;
 
 public class OrdersWriter {
@@ -52,30 +53,31 @@ public class OrdersWriter {
         for (int j = 0; j < order.getProductsCount(); j++)
         {
             Product product = order.getProduct(j);
-            writeProductCodeAndColor(sb, product.getCode(), getColorFor(product));
+            writeProductCode(sb, product.getCode());
+            writeProductColor(sb, product.getColor());
 
-            if (product.getSize() != Product.SIZE_NOT_APPLICABLE) {
-                writeSizeProduct(sb, getSizeFor(product));
+            if(product.getSize().getClass() != Size.class)
+            {
+                writeSizeProduct(sb, product.getSize());
             }
 
             writePriceTo(sb, product);
         }
     }
 
-    private void writeSizeProduct(StringBuffer sb, String size)
+    private void writeSizeProduct(StringBuffer sb, Size size)
     {
-        sb.append("\"size\": \""
-                + size
-                + "\", ");
+        sb.append("\"size\": \"" + size + "\", ");
     }
 
-    private void writeProductCodeAndColor(StringBuffer sb, String codeProduct, String colorProduct)
+    private void writeProductCode(StringBuffer sb, String codeProduct)
     {
-        sb.append("{\"code\": \""
-                + codeProduct
-                + "\", \"color\": \""
-                + colorProduct
-                + "\", ");
+        sb.append("{\"code\": \"" + codeProduct);
+    }
+
+    private void writeProductColor(StringBuffer sb, Color color)
+    {
+        sb.append("\", \"color\": \"" + color + "\", ");
     }
 
     private void writePriceTo(StringBuffer sb, Product product)
@@ -85,35 +87,5 @@ public class OrdersWriter {
                 + ", \"currency\": \""
                 + product.getCurrency()
                 + "\"}, ");
-    }
-
-    private String getSizeFor(Product product) {
-        final int sizeNb = product.getSize();
-        String[] sizesTab = {"XS", "S", "M", "L", "XL", "XXL", "Invalid Size"};
-
-        return getLinked(sizesTab, product.getSize());
-    }
-
-    private String getColorFor(Product product) {
-        String[] valueTab = {"blue", "red", "yellow", "no color"};
-        return getLinked(valueTab, product.getColor());
-    }
-
-    private String getLinked(String[] valueTab, int productSize)
-    {
-        final int tabSize = valueTab.length;
-
-        if(productSize > tabSize)
-        {
-            return valueTab[tabSize];
-        }
-
-        Map<Integer, String> map = new HashMap<Integer, String>();
-        for(int i = 1; i <= tabSize; ++i)
-        {
-            map.put(i, valueTab[i-1]);
-        }
-
-        return map.get(productSize);
     }
 }
