@@ -3,21 +3,21 @@ import Sizes.Size;
 
 public class OrdersWriter {
     private Orders orders;
-    private StringBuffer sb;
+    private StringBuffer content;
 
     public String getContents() {
-        sb = new StringBuffer("{\"orders\": [");
+        content = new StringBuffer("{\"orders\": [");
         writeOrderTo();
         displayProduct(orders.getOrdersCount());
 
-        return sb.append("]}").toString();
+        return content.append("]}").toString();
     }
 
     public void  displayProduct(int numberOfOrders)
     {
         if (numberOfOrders > 0)
         {
-            sb.delete(sb.length() - 2, sb.length());
+            content.delete(content.length() - 2, content.length());
         }
     }
 
@@ -27,9 +27,9 @@ public class OrdersWriter {
 
     private void writeOrderTo()
     {
-        final int nbOrders = orders.getOrdersCount();
+        final int numberOfOrders = orders.getOrdersCount();
 
-        for (int i = 0; i < nbOrders; i++)
+        for (int i = 0; i < numberOfOrders; i++)
         {
             Order order = orders.getOrder(i);
 
@@ -38,18 +38,18 @@ public class OrdersWriter {
 
             displayProduct(order.getProductsCount());
 
-            sb.append("]}, ");
+            content.append("]}, ");
         }
     }
 
     private void writeOrderIdTo(int orderId)
     {
-        sb.append("{\"id\": " + orderId);
+        content.append("{\"id\": ").append(orderId);
     }
 
     private void writeProductsTo(Order order)
     {
-        sb.append(", \"products\": [");
+        content.append(", \"products\": [");
 
         for (int j = 0; j < order.getProductsCount(); j++)
         {
@@ -68,25 +68,30 @@ public class OrdersWriter {
 
     private void writeSizeProduct(Size size)
     {
-        sb.append("\"size\": \"" + size + "\", ");
+        content.append("\"size\": \"")
+                .append(size)
+                .append("\", ");
     }
 
     private void writeProductCode(String codeProduct)
     {
-        sb.append("{\"code\": \"" + codeProduct);
+        content.append("{\"code\": \"")
+                .append(codeProduct);
     }
 
     private void writeProductColor(Color color)
     {
-        sb.append("\", \"color\": \"" + color + "\", ");
+        content.append("\", \"color\": \"")
+                .append(color)
+                .append("\", ");
     }
 
     private void writePriceTo(Product product)
     {
-        sb.append("\"price\": "
-                + product.getPrice()
-                + ", \"currency\": \""
-                + product.getCurrency()
-                + "\"}, ");
+        content.append("\"price\": ")
+                .append(product.getPrice())
+                .append(", \"currency\": \"")
+                .append(product.getCurrency())
+                .append("\"}, ");
     }
 }
