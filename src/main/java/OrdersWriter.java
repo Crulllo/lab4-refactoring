@@ -8,13 +8,17 @@ public class OrdersWriter {
     public String getContents() {
         sb = new StringBuffer("{\"orders\": [");
         writeOrderTo();
+        displayProduct(orders.getOrdersCount());
 
-        if (orders.getOrdersCount() > 0)
+        return sb.append("]}").toString();
+    }
+
+    public void  displayProduct(int numberOfOrders)
+    {
+        if (numberOfOrders > 0)
         {
             sb.delete(sb.length() - 2, sb.length());
         }
-
-        return sb.append("]}").toString();
     }
 
     public OrdersWriter(Orders orders) {
@@ -32,9 +36,7 @@ public class OrdersWriter {
             writeOrderIdTo(order.getOrderId());
             writeProductsTo(order);
 
-            if (order.getProductsCount() > 0) {
-                sb.delete(sb.length() - 2, sb.length());
-            }
+            displayProduct(order.getProductsCount());
 
             sb.append("]}, ");
         }
