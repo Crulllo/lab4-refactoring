@@ -40,6 +40,7 @@ public class OrdersWriterTest {
 
     @Test
     public void OneOrderWithOneProduct() {
+        //Le prof a permis d'adapter les appels.
         Color b = new Blue();
         Size medium = new SizeM();
         order111.AddProduct(new Product("Shirt", b, medium, 2.99, "TWD"));
@@ -50,9 +51,10 @@ public class OrdersWriterTest {
 
     @Test
     public void OneOrderWithOneProductNoSize() {
+        //Le prof a permis d'adapter les appels.
         Color r = new Red();
-        Size NA = new Size();
-        order111.AddProduct(new Product("Pot", r, NA, 16.50, "SGD"));
+        Size noSize = new Size();
+        order111.AddProduct(new Product("Pot", r, noSize, 16.50, "SGD"));
 
         String order111Json = JsonOrder111WithProduct("{\"code\": \"Pot\", \"color\": \"red\", \"price\": 16.5, \"currency\": \"SGD\"}");
         assertEquals("{\"orders\": [" + order111Json + "]}", new OrdersWriter(orders).getContents());
